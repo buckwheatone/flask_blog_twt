@@ -1,6 +1,6 @@
 # Flask Blog Tutorial
 
-This repository was cloned from a blog series by [Tech with Tim (TwT)](https://www.youtube.com/watch?v=GQcM8wdduLI&list=PLzMcBGfZo4-nK0Pyubp7yIG0RdXp6zklu) where he walks through how to implement a functional blog app using Python and Flask (see tutorial 5 for the final product, or watch the entire series for a great walkthrough).  Tim avoids using data models that require SQL syntax, and instead uses the SQLAlchemy ORM.  This allows developers to work with a data model even if they're unfamiliar with SQL...great for beginning programmers!  While this repository will keep SQLAlchemy, future commits will have more comlicated relationships and so this is more tailored to intermediate to advanced develoeprs.  
+This repository was cloned from a blog series by [Tech with Tim (TwT)](https://www.youtube.com/watch?v=GQcM8wdduLI&list=PLzMcBGfZo4-nK0Pyubp7yIG0RdXp6zklu) where he walks through how to implement a functional blog app using Python and Flask (see tutorial 5 for the final product, or watch the entire series for a great walkthrough).  Tim avoids using data models that require SQL syntax, and instead uses the SQLAlchemy ORM.  This allows developers to work with a data model even if they're unfamiliar with SQL...great for beginning programmers!  While this repository will keep SQLAlchemy, future commits will have more comlicated relationships and so this is more tailored to intermediate to advanced developers.  
 
 # Enhancements
 
