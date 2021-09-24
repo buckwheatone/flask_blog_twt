@@ -1,28 +1,50 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">{% block header %}Posts{% endblock %}</h1>
+{% block header %}
+<div class="d-flex justify-content-between align-items-center">
+  <div><h1>Posts</h1></div>
+  <div>Logged in as: <strong>{{ current_user.username }}</strong></div>
+</div>
+{% endblock %} 
 <div id="posts">
   {% for post in posts %}
   <div class="card border-dark">
     <div class="card-header d-flex justify-content-between align-items-center">
       <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
-      <div>
-        <span id="likes-count-{{post.id}}">
-        {{ post.likes|length }}</span> 
-        {% if user.id in post.likes|map(attribute="author")|list %}
-        <i
+      <div class="d-flex my-1">
+        <span class="mx-1" id="likes-count-{{post.id}}">
+          {{ post.likes|length }}</span> 
+          {% if user.id in post.likes|map(attribute="author")|list %}
+        <div class="mx-1">
+          <a href="/like-post/{{ post.id }}" id="like-button-{{post.id}}" onclick="like({{post.id}})">
+            <span class="material-icons" style="color: rgb(254, 60, 52)">favorite</span>
+          </a>
+        </div>
+        <!-- <i
           class="fas fa-thumbs-up"
           id="like-button-{{post.id}}"
           onclick="like({{post.id}})"
-        ></i>
+        ></i> -->
         {% else %}
-        <i
+        <div class="mx-1">
+          <a href="/like-post/{{ post.id }}" id="like-button-{{post.id}}" onclick="like({{post.id}})">
+            <span class="material-icons" style="color: rgb(254, 60, 52)">favorite_outline</span>
+          </a>
+        </div> 
+        <!-- <i
           class="far fa-thumbs-up"
           id="like-button-{{post.id}}"
           onclick="like({{post.id}})"
-        ></i>
-        {% endif %} {% if user.id == post.author %}
-        <div class="btn-group">
+        ></i> -->
+        {% endif %} 
+        
+        {% if user.id == post.author %}
+        <div class="mx-1">
+          <a href="/delete-post/{{ post.id }}">
+            <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
+          </a>
+        </div>
+        <!-- <div class="btn-group">
           <button
             type="button"
             class="btn btn-sm btn-primary dropdown-toggle"
@@ -35,7 +57,7 @@
               >
             </li>
           </ul>
-        </div>
+        </div> -->
         {% endif %}
       </div>
     </div>
