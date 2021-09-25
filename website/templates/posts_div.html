@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends "base.html" %} {% block title %}Home{% endblock %} 
+
+{% block content %}
 {% block header %}
 <div class="d-flex justify-content-between align-items-center">
   <div><h1>Posts</h1></div>
@@ -18,22 +19,14 @@
         <div class="mx-1">
           <i class="material-icons like" id="like-button-{{post.id}}" style="color: rgb(254,60,52)" onclick="like({{post.id}})">
             favorite
-            <!-- <span class="material-icons like" style="color: rgb(254,60,52)">favorite</span> -->
           </i>
-          <!-- <a href="/like-post/{{ post.id }}" id="like-button-{{post.id}}" onclick="like({{post.id}})">
-            <span class="material-icons" style="color: rgb(254, 60, 52)">favorite</span>
-          </a> -->
         </div>
 
         {% else %}
         <div class="mx-1">
           <i class="material-icons like" id="like-button-{{post.id}}" style="color: rgb(254,60,52)" onclick="like({{post.id}})">
             favorite_outline
-            <!-- <span class="material-icons like" style="color: rgb(254,60,52)">favorite_outline</span> -->
           </i>
-          <!-- <a href="/like-post/{{ post.id }}" id="like-button-{{post.id}}" onclick="like({{post.id}})">
-            <span class="material-icons" style="color: rgb(254, 60, 52)">favorite</span>
-          </a> -->
         </div>
         {% endif %} 
         
