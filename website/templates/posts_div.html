@@ -1,30 +1,30 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} 
 
 {% block content %}
-{% block header %}
-<div class="d-flex justify-content-between align-items-center">
-  <div><h1>Posts</h1></div>
-  <div>Logged in as: <strong>{{ current_user.username }}</strong></div>
-</div>
-{% endblock %} 
+  {% block header %}
+  <div class="d-flex justify-content-between align-items-center">
+    <div><h1>Posts</h1></div>
+    <div>Logged in as: <strong>{{ current_user.username }}</strong></div>
+  </div>
+  {% endblock %} 
 <div id="posts">
   {% for post in posts %}
   <div class="card border-dark">
     <div class="card-header d-flex justify-content-between align-items-center">
-      <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+      <a href="/posts/{{post.user.username}}" title="See posts from {{ post.user.username }}">{{post.user.username}}</a>
       <div class="d-flex my-1">
         <span class="mx-1" id="likes-count-{{post.id}}">
           {{ post.likes|length }}</span> 
           {% if user.id in post.likes|map(attribute="author")|list %}
         <div class="mx-1">
-          <i class="material-icons like" id="like-button-{{post.id}}" style="color: rgb(254,60,52)" onclick="like({{post.id}})">
+          <i class="material-icons like" id="like-button-{{post.id}}" style="color: rgb(254,60,52)" onclick="like({{post.id}})" title="Unlike">
             favorite
           </i>
         </div>
 
         {% else %}
         <div class="mx-1">
-          <i class="material-icons like" id="like-button-{{post.id}}" style="color: rgb(254,60,52)" onclick="like({{post.id}})">
+          <i class="material-icons like" id="like-button-{{post.id}}" style="color: rgb(254,60,52)" onclick="like({{post.id}})" title="Like">
             favorite_outline
           </i>
         </div>
@@ -32,7 +32,7 @@
         
         {% if user.id == post.author %}
         <div class="mx-1">
-          <a href="/delete-post/{{ post.id }}">
+          <a href="/delete-post/{{ post.id }}" title="Delete post">
             <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
           </a>
         </div>
@@ -57,7 +57,7 @@
                 {% if user.id == comment.author or user.id == post.author %}
                 <!-- Comment delete button -->
                 <div class="btn-group mx-1">
-                  <a href="/delete-comment/{{ comment.id }}">
+                  <a href="/delete-comment/{{ comment.id }}" title="Delete comment">
                     <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
                   </a>
                 </div>
@@ -80,7 +80,7 @@
       </div>
       <p class="card-text">
         {% if post.comments|length > 0 %}
-        <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+        <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button" title="Show/hide comments">
           <small>
             Show/hide {{post.comments|length}} 
             {% if post.comments|length == 1 %} 
@@ -111,7 +111,8 @@
     </div>
     <div class="card-footer text-muted">{{post.date_created.strftime("%m-%d-%Y")}}</div>
   </div>
-  <br/ > {% endfor %}
+  <br/ > 
+{% endfor %}
 </div>
 {% block footer %}
 <div align="center">
