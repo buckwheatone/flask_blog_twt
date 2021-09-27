@@ -11,8 +11,9 @@
 </form>
 <br />
 <div align="center">
-  <a href="/home"
-    ><button type="button" class="btn btn-lg btn-secondary">Back</button></a
-  >
+  <!-- <a href="/home"> -->
+  <a href="{{ url_for('views.home') }}">
+    <button type="button" class="btn btn-lg btn-secondary">Back</button>
+  </a>
 </div>
 {% endblock %}

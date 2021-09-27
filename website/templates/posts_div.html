@@ -36,20 +36,6 @@
             <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
           </a>
         </div>
-        <!-- <div class="btn-group">
-          <button
-            type="button"
-            class="btn btn-sm btn-primary dropdown-toggle"
-            data-bs-toggle="dropdown"
-          ></button>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="/delete-post/{{post.id}}" class="dropdown-item"
-                >Delete</a
-              >
-            </li>
-          </ul>
-        </div> -->
         {% endif %}
       </div>
     </div>
@@ -67,24 +53,24 @@
                 >: {{comment.text}}
               </div>
               <div>
-                <small class="text-muted"> {{comment.date_created}}</small>
+                <small class="text-muted"> {{ comment.date_created.strftime('%Y-%m-%d') }}</small>
                 {% if user.id == comment.author or user.id == post.author %}
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-primary dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                  ></button>
+                <!-- Comment delete button -->
+                <div class="btn-group mx-1">
+                  <a href="/delete-comment/{{ comment.id }}">
+                    <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
+                  </a>
+                </div>
+                <!-- <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
                   <ul class="dropdown-menu">
                     <li>
-                      <a
-                        href="/delete-comment/{{comment.id}}"
-                        class="dropdown-item"
-                        >Delete</a
-                      >
+                      <a href="/delete-comment/{{comment.id}}" class="dropdown-item">
+                        Delete
+                      </a>
                     </li>
                   </ul>
-                </div>
+                </div> -->
                 {% endif %}
               </div>
             </div>
@@ -95,7 +81,14 @@
       <p class="card-text">
         {% if post.comments|length > 0 %}
         <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
-          <small>View {{post.comments|length}} Comments</small>
+          <small>
+            Show/hide {{post.comments|length}} 
+            {% if post.comments|length == 1 %} 
+            Comment
+            {% else %} 
+            Comments
+            {% endif %} 
+          </small>
         </a>
         {% else %}
         <small class="text-muted">No Comments</small>
@@ -116,7 +109,7 @@
         <button type="submit" class="btn btn-primary">Comment</button>
       </form>
     </div>
-    <div class="card-footer text-muted">{{post.date_created}}</div>
+    <div class="card-footer text-muted">{{post.date_created.strftime("%m-%d-%Y")}}</div>
   </div>
   <br/ > {% endfor %}
 </div>
