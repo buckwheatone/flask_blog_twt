@@ -32,7 +32,7 @@
         
         {% if user.id == post.author %}
         <div class="mx-1">
-          <a href="/delete-post/{{ post.id }}" title="Delete post">
+          <a href="" title="Delete post" data-bs-toggle="modal" data-bs-target="#postDeleteModal" data-bs-postid="{{ post.id }}">
             <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
           </a>
         </div>
@@ -61,16 +61,7 @@
                     <span class="material-icons" style="color: rgb(60, 60, 60)">delete_outline</span>
                   </a>
                 </div>
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a href="/delete-comment/{{comment.id}}" class="dropdown-item">
-                        Delete
-                      </a>
-                    </li>
-                  </ul>
-                </div> -->
+
                 {% endif %}
               </div>
             </div>
@@ -112,7 +103,36 @@
     <div class="card-footer text-muted">{{post.date_created.strftime("%m-%d-%Y")}}</div>
   </div>
   <br/ > 
+
+
 {% endfor %}
+
+
+<!-- Delete post modal -->
+<div class="modal fade" id="postDeleteModal" tabindex="-1" aria-labelledby="postDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="postDeleteModalLabel">Delete post</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this post?
+        <br>
+        <form action="/delete-post" id="deletePostForm" method="POST"> 
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TODO: Delete post modal -->
+
+
 </div>
 {% block footer %}
 <div align="center">

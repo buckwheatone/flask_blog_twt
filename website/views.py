@@ -32,7 +32,7 @@ def create_post():
     return render_template('create_post.html', user=current_user)
 
 
-@views.route("/delete-post/<id>")
+@views.route("/delete-post/<id>", methods=['POST'])
 @login_required
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()

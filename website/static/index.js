@@ -1,3 +1,4 @@
+// Add or remove a like from a post
 function like(postId) {
   const likeCount = document.getElementById(`likes-count-${postId}`);
   const likeButton = document.getElementById(`like-button-${postId}`);
@@ -15,3 +16,15 @@ function like(postId) {
     })
     .catch((e) => alert("Could not like post."));
 }
+
+// Add functionality to comfirm post deletion 
+var postDeleteModal = document.getElementById('postDeleteModal')
+var deletePostForm = document.getElementById('deletePostForm') 
+postDeleteModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  var post_id_to_del = button.getAttribute('data-bs-postid')
+  console.log(post_id_to_del)
+  deletePostForm.setAttribute('action', '/delete-post/' + post_id_to_del)
+
+})
