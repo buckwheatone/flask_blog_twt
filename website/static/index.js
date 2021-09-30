@@ -24,7 +24,6 @@ postDeleteModal.addEventListener('show.bs.modal', function (event) {
   // Button that triggered the modal
   var button = event.relatedTarget
   var post_id_to_del = button.getAttribute('data-bs-postid')
-  console.log(post_id_to_del)
   deletePostForm.setAttribute('action', '/delete-post/' + post_id_to_del)
 
 })
