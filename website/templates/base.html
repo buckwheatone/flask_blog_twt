@@ -20,8 +20,9 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
+        <!-- Button for navbar collapse  -->
         <button
           class="navbar-toggler"
           type="button"
@@ -29,19 +30,37 @@
           data-bs-target="#navbar">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <!-- Collapsible portion of navbar -->
         <div class="collapse navbar-collapse" id="navbar">
-          <div class="navbar-nav justify-content-start">
-            <a class="nav-item nav-link" href="/home">Home</a>
-          </div>
-          <div class="navbar-nav justify-content-end">
-            {% if user.is_authenticated %}
-              <a class="nav-item nav-link" href="{{ url_for('views.create_post') }}">Create Post</a>
-              <a class="nav-item nav-link" href="/logout">Logout</a>
-            {% else %}
-              <a class="nav-item nav-link" href="/login">Login</a>
-              <a class="nav-item nav-link" href="/sign-up">Sign Up</a>
-            {% endif %}
-          </div>
+          {% if user.is_authenticated %} 
+            <ul class="navbar-nav me-auto mt-2">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
+              </li>
+              <li>
+                <a class="nav-link" href="{{ url_for('views.create_post') }}">Create Post</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mt-2">
+              <li>
+                <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+              </li>
+            </ul>
+          {% else %} 
+            <ul class="navbar-nav me-auto mt-2">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mt-2">
+              <li>
+                <button class="btn btn-outline-primary mx-2" href="{{ url_for('auth.login') }}">Login</button>
+              </li>
+              <li>
+                <button class="btn btn-primary" href="{{ url_for('auth.sign_up') }}">Register</button>
+              </li>
+            </ul>
+          {% endif %} 
         </div>
       </div>
     </nav>
