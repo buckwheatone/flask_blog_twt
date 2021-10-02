@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
+<div class="container">
 <h1 align="center">Make a Post</h1>
 
 <form method="POST">
@@ -15,5 +16,6 @@
   <a href="{{ url_for('views.home') }}">
     <button type="button" class="btn btn-lg btn-secondary">Back</button>
   </a>
+</div>
 </div>
 {% endblock %}

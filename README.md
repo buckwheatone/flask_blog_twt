@@ -18,3 +18,4 @@ My choices to enhance the tutorial include:
 - Ensure that success/error messages don't persist 
 - Change like, delete from fontawesome to Material Icons
  
+Background images on landing courtesy of [SVG Backgrounds](https:www.svgbackgrounds.com)

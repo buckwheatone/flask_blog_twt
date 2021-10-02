@@ -6,7 +6,13 @@ from . import db
 views = Blueprint("views", __name__)
 
 
+
+
 @views.route("/")
+def landing():
+    return render_template("landing.html", user=current_user)
+
+
 @views.route("/home")
 @login_required
 def home():
@@ -104,6 +110,7 @@ def like(post_id):
     post = Post.query.filter_by(id=post_id).first()
     like = Like.query.filter_by(
         author=current_user.id, post_id=post_id).first()
+
 
     if not post:
         return jsonify({'error': 'Post does not exist.'}, 400)
