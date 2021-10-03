@@ -6,13 +6,6 @@ from . import db
 views = Blueprint("views", __name__)
 
 
-
-
-@views.route("/")
-def landing():
-    return render_template("landing.html", user=current_user)
-
-
 @views.route("/home")
 @login_required
 def home():

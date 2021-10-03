@@ -7,6 +7,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 auth = Blueprint("auth", __name__)
 
 
+@auth.route("/", methods=['GET', 'POST'])
+def landing():
+    if request.method == 'post':
+        return redirect('login')
+    return render_template("landing.html", user=current_user)
+
+
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -66,4 +73,4 @@ def sign_up():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("views.landing"))
+    return redirect(url_for("auth.landing"))
