@@ -21,9 +21,10 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light nav-bg">   
+    <nav class="navbar navbar-expand-lg navbar-dark nav-bg">   
       <!-- 0aaeef -->
       <div class="container-fluid">
+        <div class="navbar-brand">BloggoSoft</div>
         <!-- Button for navbar collapse  -->
         <button
           class="navbar-toggler"
@@ -36,9 +37,9 @@
         <div class="collapse navbar-collapse" id="navbar">
           {% if user.is_authenticated %} 
             <ul class="navbar-nav me-auto mt-2">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
-              </li>
+              </li> -->
               <li>
                 <a class="nav-link" href="{{ url_for('views.create_post') }}">Create Post</a>
               </li>
@@ -50,16 +51,16 @@
             </ul>
           {% else %} 
             <ul class="navbar-nav me-auto mt-2">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
-              </li>
+              </li> -->
             </ul>
             <ul class="navbar-nav ms-auto mt-2">
               <li>
-                <a class="btn btn-outline-primary mx-2" href="{{ url_for('auth.login') }}">Login</a>
+                <a class="btn btn-outline-light mx-2" href="{{ url_for('auth.login') }}">Login</a>
               </li>
               <li>
-                <a class="btn btn-primary" href="{{ url_for('auth.sign_up') }}">Register</a>
+                <a class="btn btn-light" href="{{ url_for('auth.sign_up') }}">Register</a>
               </li>
             </ul>
           {% endif %} 
