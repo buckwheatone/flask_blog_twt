@@ -2,18 +2,44 @@
 
 {% block content %} 
 
-<div class=" container-fluid pb-5">
-  <div class="landing row">
-    <div class="col">
-      <div class="" id="heromsg">
+<section class="landing text-light p-5 justify-content-start">
+  <div class="container">
+    <div class="row">
+      <div class="col border border-danger">
+        <h1 id="heromsg">Meet the new standard in free, non-functioning blog software.</h1><br>
+        <h4 class="border border-warning">(Well, it works on your machine, it's just not hosted.)</h4>
+      </div>
+      <div class="col justify-content-center">
+        <form class="w-75" method="POST" action="/login">
+          <img src="#" alt="">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="Enter Email">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+            <br>
+            <div align="center">
+              <button class="btn btn-primary" type="submit">Login</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="container-fluid landing pb-5">
+  <div class="row py-3">
+    <div class="col text-light">
+      <div class="border border-danger" id="heromsg">
         <p>Meet the new standard in free, non-functioning blog software.<br></p>
       </div>
-      <p style="color: white; padding-left: 20px;">(Well, it works on your machine, it's just not hosted.)</p>
+      <div class="border border-warning"><p>(Well, it works on your machine, it's just not hosted.)</p></div>
     </div>
 
     <div class="col">
       <form method="POST" action="/login">
-        <h3 id="whiteheading">Login</h3>
+        <img src="d" alt="">
         <div class="form-group">
           <label for="email">Email Address</label>
           <input type="text" id="email" name="email" class="form-control" placeholder="Enter Email">
@@ -27,7 +53,7 @@
       </form>
     </div>
   </div>
-</div>
+</section> -->
 
 <div class="container-fluid">
   <div class="row">
