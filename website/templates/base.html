@@ -21,8 +21,9 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
+
+    <!-- Navbar  -->
     <nav class="navbar navbar-expand-lg navbar-dark nav-bg">   
-      <!-- 0aaeef -->
       <div class="container-fluid">
         <div class="navbar-brand">BloggoSoft</div>
         <!-- Button for navbar collapse  -->
@@ -37,9 +38,6 @@
         <div class="collapse navbar-collapse" id="navbar">
           {% if user.is_authenticated %} 
             <ul class="navbar-nav me-auto mt-2">
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
-              </li> -->
               <li>
                 <a class="nav-link" href="{{ url_for('views.create_post') }}">Create Post</a>
               </li>
@@ -51,9 +49,6 @@
             </ul>
           {% else %} 
             <ul class="navbar-nav me-auto mt-2">
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
-              </li> -->
             </ul>
             <ul class="navbar-nav ms-auto mt-2">
               <li>
@@ -68,6 +63,7 @@
       </div>
     </nav>
     
+    <!-- Flashed messages  -->
     {% with messages = get_flashed_messages(with_categories=true) %} 
       {% if messages %} 
         {% for category, message in messages %} 
@@ -86,13 +82,17 @@
       {% endif %} 
     {% endwith %}
     
-    <!-- <div class="container">{% block main %}{% endblock %}</div> -->
+    <!-- Content for all pages -->
     {% block content %} {% endblock %}
+    
+    <!-- Bootstrap script  -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Site script for likes and modals  -->
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='index.js')}}"
