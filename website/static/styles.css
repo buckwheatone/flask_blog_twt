@@ -33,8 +33,6 @@ html, body {
     padding: 20px;
 }
 
-
-
 #wbgmsg {
     color: #0AAEEF; 
     font-size: 54px;
@@ -51,4 +49,22 @@ html, body {
 #whiteheading {
     color: white; 
     text-align: center;
+}
+
+@media(max-width: 768px) {
+    #heromsg {
+        font-size: 36px;
+        line-height: 2rem;
+        padding-top: 20px;
+        text-align: center;
+    }
+    
+    #wbgmsg {
+        color: #0AAEEF; 
+        font-size: 36px;
+        line-height: 2rem;
+        padding-top: 20px;
+        text-align: center;
+    }
+
 }
