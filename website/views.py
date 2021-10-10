@@ -9,7 +9,8 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 @login_required
 def home():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=10)
     return render_template("home.html", user=current_user, posts=posts)
 
 

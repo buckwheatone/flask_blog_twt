@@ -10,8 +10,9 @@
     <div>Logged in as: <strong>{{ current_user.username }}</strong></div>
   </div>
   {% endblock %} 
+
 <div id="posts">
-  {% for post in posts %}
+  {% for post in posts.items %}
   <div class="card border-dark">
     <div class="card-header d-flex justify-content-between align-items-center">
       <a href="/posts/{{post.user.username}}" title="See posts from {{ post.user.username }}">{{post.user.username}}</a>
@@ -135,16 +136,18 @@
 
 <!-- TODO: Delete comment modal -->
 
+<!-- Pagination -->
+{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} 
+  {% if page_num %}
+    {% if posts.page == page_num %} 
+      <a href="{{ url_for('views.home', page=page_num) }}" class="btn btn-info mb-4">{{ page_num }}</a>
+    {% else %}
+      <a href="{{ url_for('views.home', page=page_num) }}" class="btn btn-outline-info mb-4">{{ page_num }}</a>
+    {% endif %}
+  {% else %} 
+    ...
+  {% endif %} 
 
-</div>
-{% block footer %}
-<div align="center" class="mb-5">
-  <a href="/create-post"
-    ><button type="button" class="btn btn-primary btn-lg">
-      Create a Post
-    </button></a
-  >
-</div>
-{% endblock %} 
-</div>
+{% endfor %} 
+
 {% endblock %}
