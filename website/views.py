@@ -51,7 +51,7 @@ def delete_post(id):
     return redirect(url_for('views.home'))
 
 
-@views.route("/posts/<username>")
+@views.route("/posts/<string:username>")
 @login_required
 def posts(username):
     user = User.query.filter_by(username=username).first()

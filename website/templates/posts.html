@@ -4,7 +4,9 @@
   {{username}}'s Posts
 {% endblock title %} 
 
-{% block header %} {{username}}'s posts ({{ posts.total }}){% endblock header %} 
+{% block header %} Posts by {{username}} ({{ posts.total }}){% endblock header %} 
+
+<!-- TODO: fix pagination to point 2nd and later pages to user's posts, not home -->
 
 {% block footer %}
 <div >
