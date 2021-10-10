@@ -10,7 +10,8 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=10)
+    posts = Post.query.order_by(Post.date_created.desc())\
+                .paginate(page=page, per_page=10)
     return render_template("home.html", user=current_user, posts=posts)
 
 
@@ -40,7 +41,8 @@ def delete_post(id):
     if not post:
         flash("Post does not exist.", category='error')
     elif current_user.id != post.author:
-        flash('You do not have permission to delete this post.', category='error')
+        flash('You do not have permission to delete this post.', \
+              category='error')
     else:
         db.session.delete(post)
         db.session.commit()
@@ -58,9 +60,12 @@ def posts(username):
         flash('No user with that username exists.', category='error')
         return redirect(url_for('views.home'))
 
-    posts = user.posts
-    return render_template("posts.html", user=current_user, posts=posts, username=username)
-
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(author=user.id)\
+                .order_by(Post.date_created.desc())\
+                .paginate(page=page, per_page=10)
+    return render_template("posts.html", \
+            user=current_user, posts=posts, username=username)
 
 @views.route("/create-comment/<post_id>", methods=['POST'])
 @login_required
@@ -86,17 +91,15 @@ def create_comment(post_id):
 @login_required
 def delete_comment(comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
-
     if not comment:
         flash('Comment does not exist.', category='error')
     elif current_user.id != comment.author and current_user.id != comment.post.author:
-        flash('You do not have permission to delete this comment.', category='error')
+        flash('You do not have permission to delete this comment.', \
+              category='error')
     else:
         db.session.delete(comment)
         db.session.commit()
-
     return redirect(url_for('views.home'))
-
 
 @views.route("/like-post/<post_id>", methods=['POST'])
 @login_required
@@ -104,8 +107,6 @@ def like(post_id):
     post = Post.query.filter_by(id=post_id).first()
     like = Like.query.filter_by(
         author=current_user.id, post_id=post_id).first()
-
-
     if not post:
         return jsonify({'error': 'Post does not exist.'}, 400)
     elif like:
@@ -117,3 +118,16 @@ def like(post_id):
         db.session.commit()
 
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
+
+# Error handler routes 
+# @app.errorhandler(403)
+# def forbidden(_):
+#     return render_template('errors/403.html'), 403
+
+# @app.errorhandler(404)
+# def page_not_found(_):
+#     return render_template('errors/404.html'), 404
+
+# @app.errorhandler(500)
+# def internal_server_error(_):
+#     return render_template('errors/500.html'), 500
