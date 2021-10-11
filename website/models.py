@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
     likes = db.relationship('Like', backref='user', passive_deletes=True)
 
+    # TODO: insert token logic
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
