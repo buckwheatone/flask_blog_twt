@@ -68,3 +68,18 @@ html, body {
     }
 
 }
+
+.blog-text {
+        /* font-size:1.5rem; */
+        
+        /**Major Properties**/
+        overflow:hidden;
+        line-height: 1.5rem;
+        max-height: 6rem;
+        -webkit-box-orient: vertical;
+        display: block;
+        display: -webkit-box;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 4;
+}
