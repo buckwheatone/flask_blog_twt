@@ -1,10 +1,10 @@
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from wtforms.widgets.core import CheckboxInput
-from application import login_manager
-from application.models import User
+from website import login_manager
+from website.models import User
 from flask import flash
 from flask_login import current_user
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
+# from wtforms.widgets.core import CheckboxInput
 from wtforms import BooleanField, PasswordField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo, length
 
@@ -41,9 +41,6 @@ class RegistrationForm(FlaskForm):
 class UpdateProfilePic(FlaskForm):
     profile_pic = FileField('Update Profile Pic', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField("Update")
-
-class DeleteAccountForm(FlaskForm):
-    pass 
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])

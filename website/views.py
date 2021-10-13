@@ -1,12 +1,12 @@
 import os
 import secrets
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from .models import Post, User, Comment, Like
 from .forms import (LoginForm, RegistrationForm, 
                     UpdateEmailForm, UpdateProfilePic, 
                     RequestResetForm, ResetPasswordForm, UpdateUsernameForm)
-from . import app, db
+from . import db
 from PIL import Image
 
 views = Blueprint("views", __name__)
@@ -24,7 +24,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+    picture_path = os.path.join(current_app.root_path, 'static/profile_pics', picture_fn)
     profile_pic_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(profile_pic_size)
@@ -158,16 +158,3 @@ def like(post_id):
         db.session.commit()
 
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
-
-# Error handler routes 
-# @app.errorhandler(403)
-# def forbidden(_):
-#     return render_template('errors/403.html'), 403
-
-# @app.errorhandler(404)
-# def page_not_found(_):
-#     return render_template('errors/404.html'), 404
-
-# @app.errorhandler(500)
-# def internal_server_error(_):
-#     return render_template('errors/500.html'), 500
