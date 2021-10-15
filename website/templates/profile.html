@@ -1,4 +1,4 @@
-{% extends "layout.html" %} 
+{% extends "base.html" %} 
 
 {% block add_head %} 
 
@@ -9,7 +9,7 @@
 
 {% endblock add_head %} 
 
-{% block main %} 
+{% block content %} 
 
 <div class="pb-5">
   <!-- Top section -- background, avatar, username -->
@@ -149,7 +149,7 @@
       <div class="modal-body">
         New e-mail address:
         <br>
-        <form action="{{ url_for('update_email') }}" method="POST"> 
+        <form action="{{ url_for('views.update_email') }}" method="POST"> 
           {{ update_em_form.hidden_tag() }}
           {{ update_em_form.email(class="mb-2") }}
 
@@ -174,7 +174,7 @@
       <div class="modal-body">
         New username:
         <br>
-        <form action="{{ url_for('update_username') }}" method="POST"> 
+        <form action="{{ url_for('views.update_username') }}" method="POST"> 
           {{ update_un_form.hidden_tag() }}
           {{ update_un_form.username(class="mb-2") }}
           <div class="modal-footer">
@@ -194,4 +194,4 @@
 <!-- TODO: Not done -->
 
   
-{% endblock main %} 
+{% endblock content %} 

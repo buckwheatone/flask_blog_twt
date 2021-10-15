@@ -158,3 +158,27 @@ def like(post_id):
         db.session.commit()
 
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
+
+@views.route("/update-email", methods=['POST']) 
+@login_required 
+def update_email():
+    update_em_form = UpdateEmailForm() 
+    if update_em_form.validate_on_submit():
+        user = User.query.get(current_user.id) 
+        user.email = update_em_form.email.data 
+        db.session.add(user)
+        db.session.commit()
+        flash("Email updated successfully", category='success')  
+    return redirect(url_for('views.profile'))    
+
+@views.route("/update-username", methods=['POST']) 
+@login_required 
+def update_username():
+    update_un_form = UpdateUsernameForm() 
+    if update_un_form.validate_on_submit():
+        user = User.query.get(current_user.id) 
+        user.username = update_un_form.username.data 
+        db.session.add(user)
+        db.session.commit()
+        flash("Username updated successfully", category='success')  
+    return redirect(url_for('views.profile'))
