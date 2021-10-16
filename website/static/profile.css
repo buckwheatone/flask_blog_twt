@@ -1,0 +1,95 @@
+:root {
+    /* --bs-body-font-size: 0.875rem; */
+    --bs-body-font-family: Lato, sans-serif; 
+}
+
+html {
+	overflow-x: hidden;
+}
+
+body {
+    font-size: var(--bs-body-font-size);
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+/* overrides default of 3rem !important */
+.pt-5 {
+    padding-top: 2rem !important;
+}
+.pb-5 {
+    padding-bottom: 2rem !important;
+}
+
+input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+
+
+
+
+.rounded-end-md, .rounded-top-md {
+    border-top-right-radius: 0.5rem !important;
+}
+.rounded-top-md {
+    border-top-left-radius: 0.5rem !important;
+}
+.pt-16 {
+    padding-top: 7.5rem !important;
+}
+
+.rounded-bottom-md, .rounded-start-md {
+    border-bottom-left-radius: 0.5rem !important;
+}
+
+.rounded-bottom-md, .rounded-end-md {
+    border-bottom-right-radius: 0.5rem !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px rgba(3, 0, 71, 0.09) !important;
+}
+
+.mt-n5 {
+    margin-top: -2rem !important;
+}
+
+.avatar-xl {
+    height: 5rem;
+    width: 5rem;
+}
+
+.h2, h2 {
+    font-size: 1.5rem;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    color: #18113c;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    letter-spacing: -0.022rem;
+}
+
+.btn-outline-primary {
+    border-color: #2066b4;
+    color: #2066b4;
+}
+
+
+
+

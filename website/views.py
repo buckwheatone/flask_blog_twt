@@ -6,6 +6,7 @@ from .models import Post, User, Comment, Like
 from .forms import (LoginForm, RegistrationForm, 
                     UpdateEmailForm, UpdateProfilePic, 
                     RequestResetForm, ResetPasswordForm, UpdateUsernameForm)
+from .utils import save_picture
 from . import db
 from PIL import Image
 
@@ -20,18 +21,6 @@ def home():
                 .paginate(page=page, per_page=10)
     return render_template("home.html", user=current_user, posts=posts)
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(current_app.root_path, 'static/profile_pics', picture_fn)
-    profile_pic_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(profile_pic_size)
-    i.save(picture_path)
-
-    return picture_fn
-
 @views.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -44,10 +33,10 @@ def profile():
     if update_pp_form.validate_on_submit():
         if update_pp_form.profile_pic.data:
             picture_file = save_picture(update_pp_form.profile_pic.data) 
-            current_user.image_file = picture_file   
+            current_user.image_file = picture_file 
         db.session.commit()
 
-        return redirect(url_for('profile'))
+        return redirect(url_for('views.profile'))
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file) 
     return render_template("profile.html", image_file=image_file, 
                             update_em_form=update_em_form,

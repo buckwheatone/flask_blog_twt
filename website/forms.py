@@ -78,3 +78,5 @@ class UpdateUsernameForm(FlaskForm):
             raise ValidationError("Username already in use.")
 
     # TODO: consider adding ASCII letters only validation
+
+    
