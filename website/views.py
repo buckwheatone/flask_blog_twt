@@ -18,16 +18,13 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     page = request.args.get('page', 1, type=int)
-    # is_active = db.session.query(db.User).filter_by(active=True)
-    is_active = select(User).where(User.active == True)
-    # result = db.session.execute(stmt)
-    # for item in result.scalars():
-    #     print(item.email) 
-    # print(is_active)
+
+    # is_active_ids = db.engine.execute("SELECT id FROM user WHERE active = 1;")
+    is_active_ids = db.session.query(User.id).filter_by(active=1)
     posts = Post.query\
-                .filter()\
+                .filter(Post.author.in_(is_active_ids))\
                 .order_by(Post.date_created.desc())\
-                .paginate(page=page, per_page=10)
+                .paginate(page=page, per_page=10) 
     return render_template("home.html", user=current_user, posts=posts)
 
 @views.route("/profile", methods=['GET', 'POST'])
