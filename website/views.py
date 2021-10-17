@@ -2,6 +2,7 @@ import os
 import secrets
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user, logout_user
+from sqlalchemy import select 
 from .models import Post, User, Comment, Like
 from .forms import (LoginForm, RegistrationForm, 
                     UpdateEmailForm, UpdateProfilePic, 
@@ -17,8 +18,15 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     page = request.args.get('page', 1, type=int)
-    # TODO: fix filtering by users that are active 
-    posts = Post.query.filter_by().order_by(Post.date_created.desc())\
+    # is_active = db.session.query(db.User).filter_by(active=True)
+    is_active = select(User).where(User.active == True)
+    # result = db.session.execute(stmt)
+    # for item in result.scalars():
+    #     print(item.email) 
+    # print(is_active)
+    posts = Post.query\
+                .filter()\
+                .order_by(Post.date_created.desc())\
                 .paginate(page=page, per_page=10)
     return render_template("home.html", user=current_user, posts=posts)
 
