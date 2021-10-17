@@ -1,7 +1,7 @@
 import os
 import secrets
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for, jsonify
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, logout_user
 from .models import Post, User, Comment, Like
 from .forms import (LoginForm, RegistrationForm, 
                     UpdateEmailForm, UpdateProfilePic, 
@@ -17,7 +17,8 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_created.desc())\
+    # TODO: fix filtering by users that are active 
+    posts = Post.query.filter_by().order_by(Post.date_created.desc())\
                 .paginate(page=page, per_page=10)
     return render_template("home.html", user=current_user, posts=posts)
 
@@ -83,7 +84,7 @@ def delete_post(id):
 @views.route("/posts/<string:username>")
 @login_required
 def posts(username):
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(username=username, active=True).first()
 
     if not user:
         flash('No user with that username exists.', category='error')
@@ -129,6 +130,15 @@ def delete_comment(comment_id):
         db.session.delete(comment)
         db.session.commit()
     return redirect(url_for('views.home'))
+
+@views.route("/delete-account", methods=['POST', 'GET'])
+def delete_account():
+    current_user.active = 0
+    db.session.commit()
+    logout_user()
+    flash("Your account has been deleted.", category='info')
+    return redirect(url_for('auth.landing'))
+
 
 @views.route("/like-post/<post_id>", methods=['POST'])
 @login_required

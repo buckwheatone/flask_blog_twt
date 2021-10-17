@@ -10,9 +10,10 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     image_file = db.Column(db.String(20), nullable=False, default='default.jpeg')
-    posts = db.relationship('Post', backref='user', passive_deletes=True)
-    comments = db.relationship('Comment', backref='user', passive_deletes=True)
-    likes = db.relationship('Like', backref='user', passive_deletes=True)
+    active = db.Column(db.Boolean, nullable=False, default=True) 
+    posts = db.relationship('Post', backref='user', passive_deletes=True) 
+    comments = db.relationship('Comment', backref='user', passive_deletes=True) 
+    likes = db.relationship('Like', backref='user', passive_deletes=True) 
 
     # TODO: insert token logic
 
