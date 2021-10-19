@@ -15,16 +15,29 @@ views = Blueprint("views", __name__)
 
 
 @views.route("/home")
-@login_required
+@login_required 
 def home():
     page = request.args.get('page', 1, type=int)
 
     # is_active_ids = db.engine.execute("SELECT id FROM user WHERE active = 1;")
     is_active_ids = db.session.query(User.id).filter_by(active=1)
+    # posts_by_actives = db.session.query(Post).filter(Post.author.in_(is_active_ids))
+    # posts = Post.query\
+    #             .filter(Post.author.in_(is_active_ids))\
+    #             .order_by(Post.date_created.desc())\
+    #             .paginate(page=page, per_page=10) 
     posts = Post.query\
                 .filter(Post.author.in_(is_active_ids))\
                 .order_by(Post.date_created.desc())\
                 .paginate(page=page, per_page=10) 
+    # alternative using left outer join
+    left_join = db.session.query(Post, Comment).outerjoin(Comment)\
+            .filter(Post.author.in_(is_active_ids))\
+            .filter(Comment.author.in_(is_active_ids))\
+            .order_by(Post.date_created.desc())\
+            .paginate(page=page, per_page=10)
+    print(str(left_join))
+
     return render_template("home.html", user=current_user, posts=posts)
 
 @views.route("/profile", methods=['GET', 'POST'])
