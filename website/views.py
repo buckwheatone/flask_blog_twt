@@ -2,7 +2,7 @@ import os
 import secrets
 from flask import current_app, Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user, logout_user
-from sqlalchemy import select 
+from sqlalchemy import select, or_
 from .models import Post, User, Comment, Like
 from .forms import (LoginForm, RegistrationForm, 
                     UpdateEmailForm, UpdateProfilePic, 
@@ -30,15 +30,24 @@ def home():
                 .filter(Post.author.in_(is_active_ids))\
                 .order_by(Post.date_created.desc())\
                 .paginate(page=page, per_page=10) 
+
+    new_posts = db.session.query(Post, Comment)\
+        .outerjoin(Comment)\
+        .filter(Post.author.in_(is_active_ids))\
+        .filter(or_(Comment.author.in_(is_active_ids), Comment.author == None))\
+        .order_by(Post.date_created.desc())\
+        .paginate(page=page, per_page=10) 
+
     # alternative using left outer join
     left_join = db.session.query(Post, Comment).outerjoin(Comment)\
             .filter(Post.author.in_(is_active_ids))\
-            .filter(Comment.author.in_(is_active_ids))\
+            .filter(or_(Comment.author.in_(is_active_ids), Comment.author == None))\
             .order_by(Post.date_created.desc())\
             .paginate(page=page, per_page=10)
     print(str(left_join))
 
-    return render_template("home.html", user=current_user, posts=posts)
+
+    return render_template("home.html", user=current_user, posts=new_posts)
 
 @views.route("/profile", methods=['GET', 'POST'])
 @login_required
