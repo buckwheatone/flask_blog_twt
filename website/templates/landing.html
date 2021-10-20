@@ -30,14 +30,57 @@
             <img class="d-none d-md-block w-25" src="../static/bloggosoft.png" alt="BloggoSoft Logo">
           </div>
           <div class="form-group">
-            <label for="email">Email Address</label>
+            
+            {{ form.hidden_tag() }}
+            <div class="form-group mb-3">  
+              {{ form.email.label() }}
+              {% if form.email.errors %} 
+                {{ form.email(class="form-control is-invalid", placeholder="name@example.com") }}
+                {% for error in form.email.errors %}
+                  <div class="invalid-feedback">
+                    <span>{{ error }}</span>
+                  </div>
+                {% endfor %} 
+              {% else %} 
+                {{ form.email(class="form-control", placeholder="Email") }}
+              {% endif %} 
+            </div>
+            <div class="form-group mb-3">
+              {{ form.password.label() }}
+              {% if form.password.errors %} 
+                {{ form.password(class="form-control is-invalid", placeholder="Password") }}
+                {% for error in form.password.errors %} 
+                  <div class="invalid-feedback">
+                    <span>{{ error }}</span>
+                  </div>
+                {% endfor %} 
+              {% else %}
+                {{ form.password(class="form-control", placeholder="Password")}}
+              {% endif %} 
+              {{ form.submit(class="w-100 mt-3 btn btn-lg btn-primary") }}
+            </div>
+            <div class="pt-3">
+              <small class="text-muted">
+                Forgot your password? 
+                <a href="#" class="ml-2" data-bs-toggle="modal" data-bs-target="#pwResetModal">
+                  Reset it
+                </a>
+              </small>
+            </div>
+          
+          
+            <!-- <label for="email">Email Address</label>
             <input type="text" id="email" name="email" class="form-control mb-3" placeholder="Enter Email">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
             <br>
             <div>
               <button class="btn btn-primary" type="submit">Login</button>
-            </div>
+            </div> -->
+
+
+
+
           </div>
         </form>
       </div>

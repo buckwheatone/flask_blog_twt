@@ -19,35 +19,18 @@ views = Blueprint("views", __name__)
 def home():
     page = request.args.get('page', 1, type=int)
 
-    # is_active_ids = db.engine.execute("SELECT id FROM user WHERE active = 1;")
+    # query to filter only active user IDs
     is_active_ids = db.session.query(User.id).filter_by(active=1)
-    # posts_by_actives = db.session.query(Post).filter(Post.author.in_(is_active_ids))
-    # posts = Post.query\
-    #             .filter(Post.author.in_(is_active_ids))\
-    #             .order_by(Post.date_created.desc())\
-    #             .paginate(page=page, per_page=10) 
+
     posts = Post.query\
                 .filter(Post.author.in_(is_active_ids))\
                 .order_by(Post.date_created.desc())\
                 .paginate(page=page, per_page=10) 
 
-    new_posts = db.session.query(Post, Comment)\
-        .outerjoin(Comment)\
-        .filter(Post.author.in_(is_active_ids))\
-        .filter(or_(Comment.author.in_(is_active_ids), Comment.author == None))\
-        .order_by(Post.date_created.desc())\
-        .paginate(page=page, per_page=10) 
+    # list of active user IDs for use in posts_div view
+    comment_id_list = [id for tup in is_active_ids.all() for id in tup]
 
-    # alternative using left outer join
-    left_join = db.session.query(Post, Comment).outerjoin(Comment)\
-            .filter(Post.author.in_(is_active_ids))\
-            .filter(or_(Comment.author.in_(is_active_ids), Comment.author == None))\
-            .order_by(Post.date_created.desc())\
-            .paginate(page=page, per_page=10)
-    print(str(left_join))
-
-
-    return render_template("home.html", user=current_user, posts=new_posts)
+    return render_template("home.html", user=current_user, posts=posts, id_list=comment_id_list)
 
 @views.route("/profile", methods=['GET', 'POST'])
 @login_required
@@ -121,8 +104,11 @@ def posts(username):
     posts = Post.query.filter_by(author=user.id)\
                 .order_by(Post.date_created.desc())\
                 .paginate(page=page, per_page=10)
+    is_active_ids = db.session.query(User.id).filter_by(active=1)
+    comment_id_list = [id for tup in is_active_ids.all() for id in tup]
+
     return render_template("posts.html", \
-            user=current_user, posts=posts, username=username)
+            user=current_user, posts=posts, username=username, id_list=comment_id_list)
 
 @views.route("/create-comment/<post_id>", methods=['POST'])
 @login_required
@@ -161,6 +147,7 @@ def delete_comment(comment_id):
 @views.route("/delete-account", methods=['POST', 'GET'])
 def delete_account():
     current_user.active = 0
+    current_user.email = current_user.email + '_deleted'
     db.session.commit()
     logout_user()
     flash("Your account has been deleted.", category='info')

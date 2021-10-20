@@ -18,11 +18,10 @@ class LoginForm(FlaskForm):
                              DataRequired(),
                              length(min=8, max=200, message="Reminder: password must be at least 8 characters."), 
                              ])
-    remember = BooleanField("Remember me")
     submit = SubmitField("Log in") 
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()]) 
     username = StringField('Username', validators=[DataRequired(), length(min=3, max=20, message="Username must be at least 3 characters")])
     password = PasswordField('Password', validators=[DataRequired(), length(min=8, max=200, message="Password must be at least 8 characters")]) 
     submit = SubmitField("Sign Up") 
