@@ -22,21 +22,12 @@ def landing():
 def login():
     if current_user.is_authenticated: 
         return redirect(url_for('views.home'))
+    
     form = LoginForm()
-    print("form created")
-    print(f"em: {form.email.data}, pw: {form.password.data}")
-    user = User.query.filter_by(email=form.email.data, active=1).first()
-    if user: 
-        print(user.email, user.password) 
-    if form.submit():
-        print("submitted")
-    if form.validate():
-        print("validated") 
+
     if form.validate_on_submit():
-        print("submitted and validated") 
-        user = User.query.filter_by(email=form.email.data, active=1).first()
-        if user:
-            print("user exists")
+
+        user = User.query.filter_by(email=form.email.data.lower(), active=1).first()
         if user and check_password_hash(user.password, form.password.data) :
             login_user(user, remember=True)
             flash("Logged in!", category='success')
@@ -53,7 +44,6 @@ def sign_up():
         return redirect(url_for('views.home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-
         new_user = User(
                 email=form.email.data.lower(), 
                 username=form.username.data, 
