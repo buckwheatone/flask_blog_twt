@@ -1,5 +1,5 @@
 .DS_Store
 __pycache__/
-website/tests/
+tests/.pytest_cache/
 website/twtblogdb.db
 config.py 
